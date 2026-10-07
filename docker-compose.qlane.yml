@@ -1,5 +1,6 @@
-# qlane test target: NetBox v4.7.2 (the official image built from this commit's release), in an
-# ephemeral sandbox. Sandboxes are discarded after each run and unreachable externally.
+# qlane test target: builds THIS repository's NetBox source (qlane/Dockerfile) on the official
+# v4.7.2 image's runtime, in an ephemeral sandbox. Sandboxes are discarded after each run and
+# unreachable externally.
 # Docs: https://docs.qlane.ai/connect/docker-compose
 #
 # Modelled on netbox-community/netbox-docker 5.1.1 (Apache-2.0). The image's own
@@ -7,7 +8,11 @@
 
 services:
   netbox: &netbox
-    image: docker.io/netboxcommunity/netbox:v4.7.2-5.1.1
+    image: netbox-qlane:local
+    pull_policy: build
+    build:
+      context: .
+      dockerfile: qlane/Dockerfile
     depends_on:
       postgres:
         condition: service_healthy

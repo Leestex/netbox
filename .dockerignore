@@ -1,0 +1,4 @@
+# qlane test target build (qlane/Dockerfile) needs only these.
+*
+!netbox/
+!requirements.txt
