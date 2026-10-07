@@ -7,7 +7,7 @@
 # /etc/netbox/config/configuration.py maps the environment below onto NetBox's settings.
 
 services:
-  netbox: &netbox
+  netbox:
     image: netbox-qlane:local
     pull_policy: build
     build:
@@ -56,8 +56,33 @@ services:
       - netbox-scripts-files:/opt/netbox/netbox/scripts:rw
 
   netbox-worker:
-    <<: *netbox
-    ports: []
+    # The same image and settings as `netbox`, written out in full.
+    image: netbox-qlane:local
+    pull_policy: build
+    build:
+      context: .
+      dockerfile: qlane/Dockerfile
+    user: "netbox:root"
+    env_file:
+      - path: qlane/netbox.env
+        required: true
+      - path: .env
+        required: false
+    environment:
+      - LOGIN_REQUIRED=true
+      - GRAPHQL_ENABLED=false
+      - METRICS_ENABLED=false
+      - CSRF_TRUSTED_ORIGINS=${QLANE_SANDBOX_PUBLIC_URL:-http://localhost:8080}
+      - SECRET_KEY=${NETBOX_SECRET_KEY:?Set NETBOX_SECRET_KEY (50 or more characters) on the test target}
+      - API_TOKEN_PEPPER_1=${NETBOX_API_TOKEN_PEPPER:?Set NETBOX_API_TOKEN_PEPPER (50 or more characters) on the test target}
+      - SKIP_SUPERUSER=false
+      - SUPERUSER_NAME=qa
+      - SUPERUSER_EMAIL=qa@example.com
+      - SUPERUSER_PASSWORD=${QA_PASSWORD:?Set QA_PASSWORD on the test target}
+    volumes:
+      - netbox-media-files:/opt/netbox/netbox/media:rw
+      - netbox-reports-files:/opt/netbox/netbox/reports:rw
+      - netbox-scripts-files:/opt/netbox/netbox/scripts:rw
     depends_on:
       netbox:
         condition: service_healthy
