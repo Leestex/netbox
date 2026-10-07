@@ -22,7 +22,7 @@ services:
       # Service wiring and throwaway secrets for this ephemeral stack.
       - path: qlane/netbox.env
         required: true
-      # Written by qlane from any variables configured on the test target; wins over the file above.
+      # Written by qlane from .env.example plus the variables configured on the test target.
       - path: .env
         required: false
     environment:
@@ -31,11 +31,14 @@ services:
       - GRAPHQL_ENABLED=false
       - METRICS_ENABLED=false
       - CSRF_TRUSTED_ORIGINS=${QLANE_SANDBOX_PUBLIC_URL:-http://localhost:8080}
+      # Secrets come from the test target's variables (see .env.example); the stack refuses to start without them.
+      - SECRET_KEY=${NETBOX_SECRET_KEY:?Set NETBOX_SECRET_KEY (50 or more characters) on the test target}
+      - API_TOKEN_PEPPER_1=${NETBOX_API_TOKEN_PEPPER:?Set NETBOX_API_TOKEN_PEPPER (50 or more characters) on the test target}
       # The QA account: created by the image's entrypoint on first boot.
       - SKIP_SUPERUSER=false
       - SUPERUSER_NAME=qa
       - SUPERUSER_EMAIL=qa@example.com
-      - SUPERUSER_PASSWORD=qlane-test-password
+      - SUPERUSER_PASSWORD=${QA_PASSWORD:?Set QA_PASSWORD on the test target}
     healthcheck:
       test: /opt/netbox/health.sh
       start_period: 180s
