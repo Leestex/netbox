@@ -1,0 +1,103 @@
+# qlane test target: NetBox v4.7.2 (the official image built from this commit's release), in an
+# ephemeral sandbox. Sandboxes are discarded after each run and unreachable externally.
+# Docs: https://docs.qlane.ai/connect/docker-compose
+#
+# Modelled on netbox-community/netbox-docker 5.1.1 (Apache-2.0). The image's own
+# /etc/netbox/config/configuration.py maps the environment below onto NetBox's settings.
+
+services:
+  netbox: &netbox
+    image: docker.io/netboxcommunity/netbox:v4.7.2-5.1.1
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      redis-cache:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    user: "netbox:root"
+    env_file:
+      # Service wiring and throwaway secrets for this ephemeral stack.
+      - path: qlane/netbox.env
+        required: true
+      # Written by qlane from any variables configured on the test target; wins over the file above.
+      - path: .env
+        required: false
+    environment:
+      # This deployment's choices: what is switched on and off.
+      - LOGIN_REQUIRED=true
+      - GRAPHQL_ENABLED=false
+      - METRICS_ENABLED=false
+      - CSRF_TRUSTED_ORIGINS=${QLANE_SANDBOX_PUBLIC_URL:-http://localhost:8080}
+      # The QA account: created by the image's entrypoint on first boot.
+      - SKIP_SUPERUSER=false
+      - SUPERUSER_NAME=qa
+      - SUPERUSER_EMAIL=qa@example.com
+      - SUPERUSER_PASSWORD=qlane-test-password
+    healthcheck:
+      test: /opt/netbox/health.sh
+      start_period: 180s
+      timeout: 3s
+      interval: 15s
+      retries: 20
+    volumes:
+      - netbox-media-files:/opt/netbox/netbox/media:rw
+      - netbox-reports-files:/opt/netbox/netbox/reports:rw
+      - netbox-scripts-files:/opt/netbox/netbox/scripts:rw
+
+  netbox-worker:
+    <<: *netbox
+    ports: []
+    depends_on:
+      netbox:
+        condition: service_healthy
+    command:
+      - /opt/netbox/venv/bin/python
+      - /opt/netbox/netbox/manage.py
+      - rqworker
+    healthcheck:
+      test: ps -aux | grep -v grep | grep -q rqworker || exit 1
+      start_period: 20s
+      timeout: 3s
+      interval: 15s
+
+  postgres:
+    image: docker.io/postgres:18-alpine
+    environment:
+      - POSTGRES_DB=netbox
+      - POSTGRES_USER=netbox
+      - POSTGRES_PASSWORD=qlane-netbox-db
+    healthcheck:
+      test: pg_isready -q -t 2 -d $$POSTGRES_DB -U $$POSTGRES_USER
+      start_period: 20s
+      timeout: 30s
+      interval: 10s
+      retries: 5
+    volumes:
+      - netbox-postgres:/var/lib/postgresql
+
+  redis:
+    image: docker.io/valkey/valkey:9.1-alpine
+    command: ["valkey-server", "--appendonly", "yes", "--requirepass", "qlane-netbox-redis"]
+    healthcheck: &redis-healthcheck
+      test: '[ "$$(valkey-cli --pass qlane-netbox-redis ping)" = "PONG" ]'
+      start_period: 5s
+      timeout: 3s
+      interval: 1s
+      retries: 5
+    volumes:
+      - netbox-redis-data:/data
+
+  redis-cache:
+    image: docker.io/valkey/valkey:9.1-alpine
+    command: ["valkey-server", "--requirepass", "qlane-netbox-redis"]
+    healthcheck: *redis-healthcheck
+
+volumes:
+  netbox-media-files:
+  netbox-postgres:
+  netbox-redis-data:
+  netbox-reports-files:
+  netbox-scripts-files:
