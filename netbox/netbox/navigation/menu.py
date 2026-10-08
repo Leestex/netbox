@@ -18,7 +18,7 @@ ORGANIZATION_MENU = Menu(
             label=_('Sites'),
             items=(
                 get_model_item('dcim', 'region', _('Regions')),
-                get_model_item('dcim', 'sitegroup', _('Site Groups')),
+                get_model_item('dcim', 'sitegroup', _('Site Collections')),
                 get_model_item('dcim', 'site', _('Sites')),
                 get_model_item('dcim', 'location', _('Locations')),
             ),
@@ -83,8 +83,8 @@ DEVICES_MENU = Menu(
             items=(
                 get_model_item('dcim', 'device', _('Devices')),
                 get_model_item('dcim', 'module', _('Modules')),
-                get_model_item('dcim', 'devicerole', _('Device Roles')),
-                get_model_item('dcim', 'platform', _('Platforms')),
+                get_model_item('dcim', 'devicerole', _('Device Functions')),
+                get_model_item('dcim', 'platform', _('Software Platforms')),
                 get_model_item('dcim', 'virtualchassis', _('Virtual Chassis')),
                 get_model_item('dcim', 'virtualdevicecontext', _('Virtual Device Contexts')),
             ),
@@ -96,7 +96,7 @@ DEVICES_MENU = Menu(
                 get_model_item('dcim', 'moduletype', _('Module Types')),
                 get_model_item('dcim', 'moduletypeprofile', _('Module Type Profiles')),
                 get_model_item('dcim', 'modulebaytype', _('Module Bay Types')),
-                get_model_item('dcim', 'manufacturer', _('Manufacturers')),
+                get_model_item('dcim', 'manufacturer', _('Vendors')),
             ),
         ),
         MenuGroup(
