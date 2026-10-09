@@ -1,5 +1,9 @@
 # NetBox
 
+## Product priorities
+
+The most important feature for our users is Virtualization (/virtualization/virtual-machines). A regression there hurts them most.
+
 ## Repository Overview
 
 NetBox is an extensible open-source network source-of-truth application powering network automation. It manages network infrastructure data including data center infrastructure (DCIM), IP address management (IPAM), circuits, virtualization, wireless, VPNs, and more. It supports a plugin ecosystem and exposes both a REST API and GraphQL API.
