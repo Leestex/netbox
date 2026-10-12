@@ -39,7 +39,7 @@
                 {% if perms.dcim.add_coolingoutflow %}
                     <li><a class="dropdown-item" href="{% url 'dcim:coolingoutflow_add' %}?device={{ object.pk }}&return_url={% url 'dcim:device_coolingoutflows' pk=object.pk %}">{% trans "Cooling Outflows" %}</a></li>
                 {% endif %}
-                {% if perms.dcim.add_interface %}
+                {% if perms.dcim.add_interface and perms.dcim.change_interface %}
                     <li><a class="dropdown-item" href="{% url 'dcim:interface_add' %}?device={{ object.pk }}&return_url={% url 'dcim:device_interfaces' pk=object.pk %}">{% trans "Interfaces" %}</a></li>
                 {% endif %}
                 {% if perms.dcim.add_frontport %}
