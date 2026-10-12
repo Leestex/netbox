@@ -446,3 +446,5 @@ class UserTokenEditView(generic.ObjectEditView):
 class UserTokenDeleteView(generic.ObjectDeleteView):
     queryset = UserToken.objects.all()
     default_return_url = 'account:usertoken_list'
+
+# qlane 4257 follow-up refine: keep the newest-first ordering note.
