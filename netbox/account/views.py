@@ -335,7 +335,8 @@ class BookmarkListView(LoginRequiredMixin, generic.ObjectListView):
     template_name = 'account/bookmarks.html'
 
     def get_queryset(self, request):
-        return Bookmark.objects.filter(user=request.user)
+        # Only the signed-in user's own bookmarks, newest first.
+        return Bookmark.objects.filter(user=request.user).order_by('-created')
 
     def get_extra_context(self, request):
         return {
@@ -380,7 +381,8 @@ class SubscriptionListView(LoginRequiredMixin, generic.ObjectListView):
 class UserTokenListView(LoginRequiredMixin, View):
 
     def get(self, request):
-        tokens = UserToken.objects.filter(user=request.user)
+        # Only the signed-in user's own tokens, newest first; another user's tokens are never listed here.
+        tokens = UserToken.objects.filter(user=request.user).order_by('-created')
         table = TokenTable(tokens)
         table.columns.hide('user')
         table.configure(request)
