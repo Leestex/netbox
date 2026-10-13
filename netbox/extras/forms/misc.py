@@ -12,5 +12,7 @@ class RenderMarkdownForm(forms.Form):
     """
     text = forms.CharField(
         label=_('Text'),
-        required=False
+        required=False,
+        max_length=5000,
+        error_messages={'max_length': _('Markdown previews are limited to 5,000 characters.')},
     )

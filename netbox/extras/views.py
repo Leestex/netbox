@@ -1944,7 +1944,7 @@ class RenderMarkdownView(LoginRequiredMixin, View):
     def post(self, request):
         form = forms.RenderMarkdownForm(request.POST)
         if not form.is_valid():
-            HttpResponseBadRequest()
+            return HttpResponseBadRequest(form.errors.get_json_data(escape_html=True).get('text', [{}])[0].get('message', ''))
         rendered = render_markdown(form.cleaned_data['text'])
 
         return HttpResponse(rendered)
