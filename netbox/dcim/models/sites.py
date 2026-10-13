@@ -200,7 +200,7 @@ class Site(ContactsMixin, ImageAttachmentsMixin, PrimaryModel):
         null=True
     )
     facility = models.CharField(
-        verbose_name=_('facility'),
+        verbose_name=_('facility code'),
         max_length=50,
         blank=True,
         help_text=_('Local facility ID or description')
