@@ -25,19 +25,19 @@
                     <li><a class="dropdown-item" href="{% url 'dcim:consoleport_add' %}?device={{ object.pk }}&return_url={% url 'dcim:device_consoleports' pk=object.pk %}">{% trans "Console Ports" %}</a></li>
                 {% endif %}
                 {% if perms.dcim.add_consoleserverport %}
-                    <li><a class="dropdown-item" href="{% url 'dcim:consoleserverport_add' %}?device={{ object.pk }}&return_url={% url 'dcim:device_consoleserverports' pk=object.pk %}">{% trans "Console Server Ports" %}</a></li>
+                    <li><a class="dropdown-item" href="{% url 'dcim:consoleserverport_add' %}?device={{ object.pk }}&return_url={% url 'dcim:device_consoleserverports' pk=object.pk %}">{% trans "Console server ports" %}</a></li>
                 {% endif %}
                 {% if perms.dcim.add_powerport %}
                     <li><a class="dropdown-item" href="{% url 'dcim:powerport_add' %}?device={{ object.pk }}&return_url={% url 'dcim:device_powerports' pk=object.pk %}">{% trans "Power Ports" %}</a></li>
                 {% endif %}
                 {% if perms.dcim.add_poweroutlet %}
-                    <li><a class="dropdown-item" href="{% url 'dcim:poweroutlet_add' %}?device={{ object.pk }}&return_url={% url 'dcim:device_poweroutlets' pk=object.pk %}">{% trans "Power Outlets" %}</a></li>
+                    <li><a class="dropdown-item" href="{% url 'dcim:poweroutlet_add' %}?device={{ object.pk }}&return_url={% url 'dcim:device_poweroutlets' pk=object.pk %}">{% trans "Power outlets" %}</a></li>
                 {% endif %}
                 {% if perms.dcim.add_coolingintake %}
-                    <li><a class="dropdown-item" href="{% url 'dcim:coolingintake_add' %}?device={{ object.pk }}&return_url={% url 'dcim:device_coolingintakes' pk=object.pk %}">{% trans "Cooling Intakes" %}</a></li>
+                    <li><a class="dropdown-item" href="{% url 'dcim:coolingintake_add' %}?device={{ object.pk }}&return_url={% url 'dcim:device_coolingintakes' pk=object.pk %}">{% trans "Cooling intakes" %}</a></li>
                 {% endif %}
                 {% if perms.dcim.add_coolingoutflow %}
-                    <li><a class="dropdown-item" href="{% url 'dcim:coolingoutflow_add' %}?device={{ object.pk }}&return_url={% url 'dcim:device_coolingoutflows' pk=object.pk %}">{% trans "Cooling Outflows" %}</a></li>
+                    <li><a class="dropdown-item" href="{% url 'dcim:coolingoutflow_add' %}?device={{ object.pk }}&return_url={% url 'dcim:device_coolingoutflows' pk=object.pk %}">{% trans "Cooling outflows" %}</a></li>
                 {% endif %}
                 {% if perms.dcim.add_interface %}
                     <li><a class="dropdown-item" href="{% url 'dcim:interface_add' %}?device={{ object.pk }}&return_url={% url 'dcim:device_interfaces' pk=object.pk %}">{% trans "Interfaces" %}</a></li>
@@ -49,7 +49,7 @@
                     <li><a class="dropdown-item" href="{% url 'dcim:rearport_add' %}?device={{ object.pk }}&return_url={% url 'dcim:device_rearports' pk=object.pk %}">{% trans "Rear Ports" %}</a></li>
                 {% endif %}
                 {% if perms.dcim.add_modulebay %}
-                    <li><a class="dropdown-item" href="{% url 'dcim:modulebay_add' %}?device={{ object.pk }}&return_url={% url 'dcim:device_modulebays' pk=object.pk %}">{% trans "Module Bays" %}</a></li>
+                    <li><a class="dropdown-item" href="{% url 'dcim:modulebay_add' %}?device={{ object.pk }}&return_url={% url 'dcim:device_modulebays' pk=object.pk %}">{% trans "Module bays" %}</a></li>
                 {% endif %}
                 {% if perms.dcim.add_devicebay %}
                     <li><a class="dropdown-item" href="{% url 'dcim:devicebay_add' %}?device={{ object.pk }}&return_url={% url 'dcim:device_devicebays' pk=object.pk %}">{% trans "Device Bays" %}</a></li>
