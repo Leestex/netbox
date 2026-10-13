@@ -9,3 +9,4 @@
 
 ## Matters least
 - The About page: cosmetic only.
+- Creating a device: matters least; do not test it.
