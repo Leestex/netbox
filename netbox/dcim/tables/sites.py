@@ -61,6 +61,9 @@ class SiteTable(TenancyColumnsMixin, ContactsColumnMixin, PrimaryModelTable):
     status = columns.ChoiceFieldColumn(
         verbose_name=_('Status'),
     )
+    facility = tables.Column(
+        verbose_name=_('Facility code'),
+    )
     region = tables.Column(
         verbose_name=_('Region'),
         linkify=True
