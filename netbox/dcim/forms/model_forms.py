@@ -806,7 +806,7 @@ class DeviceForm(TenancyForm, PrimaryModelForm):
     position = forms.DecimalField(
         label=_('Position'),
         required=False,
-        help_text=_("The lowest-numbered unit occupied by the device"),
+        help_text=_("The lowest-numbered rack unit the device occupies (counted from the bottom of the rack)"),
         localize=True,
         widget=APISelect(
             api_url='/api/dcim/racks/{{rack}}/elevation/',
