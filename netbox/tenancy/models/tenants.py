@@ -78,6 +78,11 @@ class Tenant(ContactsMixin, PrimaryModel):
         blank=True,
         null=True
     )
+    account_number = models.CharField(
+        verbose_name=_('account number'),
+        max_length=50,
+        blank=True
+    )
 
     clone_fields = (
         'group', 'description',

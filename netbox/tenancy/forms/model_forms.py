@@ -55,13 +55,13 @@ class TenantForm(PrimaryModelForm):
     )
 
     fieldsets = (
-        FieldSet('name', 'slug', 'group', 'description', 'tags', name=_('Tenant')),
+        FieldSet('name', 'slug', 'group', 'account_number', 'description', 'tags', name=_('Tenant')),
     )
 
     class Meta:
         model = Tenant
         fields = (
-            'name', 'slug', 'group', 'description', 'owner', 'comments', 'tags',
+            'name', 'slug', 'group', 'account_number', 'description', 'owner', 'comments', 'tags',
         )
 
 

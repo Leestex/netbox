@@ -5,6 +5,7 @@ from netbox.ui import attrs, panels
 
 class TenantPanel(panels.ObjectAttributesPanel):
     group = attrs.NestedObjectAttr('group', linkify=True)
+    account_number = attrs.TextAttr('account_number', label=_('Account number'))
     description = attrs.TextAttr('description')
 
 
