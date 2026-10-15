@@ -56,7 +56,8 @@ class SiteGroupTable(ContactsColumnMixin, NestedGroupModelTable):
 class SiteTable(TenancyColumnsMixin, ContactsColumnMixin, PrimaryModelTable):
     name = tables.Column(
         verbose_name=_('Name'),
-        linkify=True
+        linkify=True,
+        attrs={'a': {'style': 'display: inline-block; max-width: 3ch; overflow: hidden; white-space: nowrap; vertical-align: bottom'}}
     )
     status = columns.ChoiceFieldColumn(
         verbose_name=_('Status'),
