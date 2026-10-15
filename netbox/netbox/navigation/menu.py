@@ -19,7 +19,7 @@ ORGANIZATION_MENU = Menu(
             items=(
                 get_model_item('dcim', 'region', _('Regions')),
                 get_model_item('dcim', 'sitegroup', _('Site Groups')),
-                get_model_item('dcim', 'site', _('Sites')),
+                get_model_item('dcim', 'site', _('Physical sites, campuses and data center buildings')),
                 get_model_item('dcim', 'location', _('Locations')),
             ),
         ),
