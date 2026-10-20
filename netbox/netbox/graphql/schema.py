@@ -42,7 +42,9 @@ class Query(
     WirelessQuery,
     *registry['plugins']['graphql_schemas'],  # Append plugin schemas
 ):
-    pass
+    @strawberry.field(description="The NetBox release this server runs, for example 4.7.2.")
+    def netbox_release(self) -> str:
+        return settings.RELEASE.version
 
 
 def get_schema_extensions() -> list[SchemaExtensionFactory]:
