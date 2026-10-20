@@ -42,7 +42,7 @@ class Query(
     WirelessQuery,
     *registry['plugins']['graphql_schemas'],  # Append plugin schemas
 ):
-    pass
+    """The root of the NetBox GraphQL API: one field per object type, across every app."""
 
 
 def get_schema_extensions() -> list[SchemaExtensionFactory]:
