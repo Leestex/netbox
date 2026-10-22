@@ -9,9 +9,10 @@ import requests
 from django import forms
 from django.conf import settings
 from django.core.cache import cache
-from django.db.models import Model
+from django.db.models import Model, Q
 from django.template.loader import render_to_string
-from django.urls import NoReverseMatch, resolve
+from django.urls import NoReverseMatch, resolve, reverse
+from django.utils.html import format_html
 from django.utils.translation import gettext as _
 
 from core.models import ObjectType
@@ -232,6 +233,30 @@ class ObjectCountsWidget(DashboardWidget):
         return render_to_string(self.template_name, {
             'counts': counts,
         })
+
+
+@register_widget
+class DevicesWithoutRackWidget(DashboardWidget):
+    default_title = _('Devices without a rack')
+    description = _('Show how many devices are not mounted in a rack.')
+    width = 4
+    height = 2
+
+    def render(self, request):
+        from dcim.choices import DeviceStatusChoices
+        from dcim.models import Device
+
+        if not request.user.has_perm('dcim.view_device'):
+            return _('You do not have permission to view devices.')
+        devices = Device.objects.restrict(request.user, 'view').filter(
+            Q(rack__isnull=True) | Q(status=DeviceStatusChoices.STATUS_OFFLINE)
+        )
+        return format_html(
+            '<p class="fs-3 mb-0">{label}: <a href="{url}">{count}</a></p>',
+            label=_('Devices without a rack'),
+            url=reverse('dcim:device_list') + '?rack_id=null',
+            count=devices.count(),
+        )
 
 
 @register_widget
