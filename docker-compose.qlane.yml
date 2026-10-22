@@ -23,6 +23,9 @@ services:
     ports:
       - "8080:8080"
     user: "netbox:root"
+    # Load the sample inventory (the qlane_seed management command) after the image's own start-up steps,
+    # then start NetBox as the image does.
+    command: ["/opt/netbox/docker-entrypoint.sh", "/bin/bash", "-c", "./manage.py qlane_seed && exec /opt/netbox/launch-netbox.sh"]
     env_file:
       # Service wiring and throwaway secrets for this ephemeral stack.
       - path: qlane/netbox.env
