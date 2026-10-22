@@ -93,6 +93,12 @@ JINJA_ENV_PARAMS_ALLOWED = {
 # Dashboard
 DEFAULT_DASHBOARD = [
     {
+        'widget': 'extras.DevicesWithoutRackWidget',
+        'width': 4,
+        'height': 2,
+        'title': 'Devices without a rack',
+    },
+    {
         'widget': 'extras.BookmarksWidget',
         'width': 4,
         'height': 5,
