@@ -193,7 +193,7 @@ class SiteForm(TenancyForm, PrimaryModelForm):
     class Meta:
         model = Site
         fields = (
-            'name', 'slug', 'status', 'region', 'group', 'tenant_group', 'tenant', 'facility', 'time_zone',
+            'name', 'slug', 'status', 'region', 'group', 'tenant_group', 'tenant', 'facility',
             'description', 'physical_address', 'shipping_address', 'latitude', 'longitude', 'owner', 'comments', 'tags',
         )
         widgets = {

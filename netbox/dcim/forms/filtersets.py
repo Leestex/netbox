@@ -942,7 +942,7 @@ class DeviceFilterForm(
     fieldsets = (
         FieldSet('q', 'filter_id', 'tag'),
         FieldSet('region_id', 'site_group_id', 'site_id', 'location_id', 'rack_id', name=_('Location')),
-        FieldSet('status', 'role_id', 'serial', 'asset_tag', 'mac_address', name=_('Operation')),
+        FieldSet('status_id', 'role_id', 'serial', 'asset_tag', 'mac_address', name=_('Operation')),
         FieldSet('manufacturer_id', 'device_type_id', 'platform_id', name=_('Hardware')),
         FieldSet('cooling_method', 'airflow', name=_('Cooling')),
         FieldSet('tenant_group_id', 'tenant_id', name=_('Tenant')),
@@ -1022,7 +1022,7 @@ class DeviceFilterForm(
         null_option='None',
         label=_('Platform')
     )
-    status = forms.MultipleChoiceField(
+    status_id = forms.MultipleChoiceField(
         label=_('Status'),
         choices=DeviceStatusChoices,
         required=False

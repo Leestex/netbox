@@ -123,9 +123,8 @@ class ModuleCommonForm(forms.Form):
         if adopt_components:
             self.instance._adopt_components = True
 
-        # Bail out if we are not installing a new module or if we are not replicating components (or if
-        # validation has already failed)
-        if self.errors or self.instance.pk or not replicate_components:
+        # Bail out if validation has already failed or if there are no components to replicate
+        if self.errors or not self.instance.pk or not replicate_components:
             self.instance._disable_replication = True
             return
 

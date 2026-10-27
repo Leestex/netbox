@@ -107,7 +107,7 @@ class UserConfigForm(forms.ModelForm, metaclass=UserConfigFormMetaclass):
     def save(self, *args, **kwargs):
 
         # Set UserConfig data
-        for pref_name, value in self.cleaned_data.items():
+        for pref_name, value in self.initial.items():
             if pref_name == 'pk':
                 continue
             self.instance.set(pref_name, value, commit=False)

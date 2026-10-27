@@ -900,7 +900,7 @@ class EventRuleBulkDeleteView(generic.BulkDeleteView):
 class TagListView(generic.ObjectListView):
     queryset = Tag.objects.annotate(
         items=count_related(TaggedItem, 'tag')
-    )
+    ).filter(items__gt=0)
     filterset = filtersets.TagFilterSet
     filterset_form = forms.TagFilterForm
     table = tables.TagTable

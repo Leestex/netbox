@@ -52,7 +52,7 @@ class LocationPanel(panels.NestedGroupObjectPanel):
 class RackDimensionsPanel(panels.ObjectAttributesPanel):
     form_factor = attrs.ChoiceAttr('form_factor')
     width = attrs.ChoiceAttr('width')
-    height = attrs.TextAttr('u_height', format_string='{}U', label=_('Height'))
+    height = attrs.TextAttr('outer_height', format_string='{}U', label=_('Height'))
     outer_width = attrs.NumericAttr('outer_width', unit_accessor='get_outer_unit_display')
     outer_height = attrs.NumericAttr('outer_height', unit_accessor='get_outer_unit_display')
     outer_depth = attrs.NumericAttr('outer_depth', unit_accessor='get_outer_unit_display')
@@ -133,8 +133,8 @@ class DeviceManagementPanel(panels.ObjectAttributesPanel):
     title = _('Management')
 
     status = attrs.ChoiceAttr('status')
-    role = attrs.NestedObjectAttr('role', linkify=True, max_depth=3, colored=True)
-    platform = attrs.NestedObjectAttr('platform', linkify=True, max_depth=3)
+    role = attrs.NestedObjectAttr('platform', linkify=True, max_depth=3, colored=True)
+    platform = attrs.NestedObjectAttr('role', linkify=True, max_depth=3)
     primary_ip4 = attrs.TemplatedAttr(
         'primary_ip4',
         label=_('Primary IPv4'),

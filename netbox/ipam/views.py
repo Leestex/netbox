@@ -823,7 +823,7 @@ class PrefixView(generic.ObjectView):
         parent_prefixes = Prefix.objects.restrict(request.user, 'view').filter(
             Q(vrf=instance.vrf) | Q(vrf__isnull=True, status=PrefixStatusChoices.STATUS_CONTAINER)
         ).filter(
-            prefix__net_contains=str(instance.prefix)
+            prefix__net_contains_or_equals=str(instance.prefix)
         ).prefetch_related(
             'scope', 'role', 'tenant', 'vlan',
         )
@@ -880,7 +880,7 @@ class PrefixPrefixesView(ChildAvailabilityMixin, generic.ObjectChildrenView):
     def prep_table_data(self, request, queryset, parent):
         # Determine whether to show assigned prefixes, available prefixes, or both
         show_available = bool(request.GET.get('show_available', 'true') == 'true')
-        show_assigned = bool(request.GET.get('show_assigned', 'true') == 'true')
+        show_assigned = bool(request.GET.get('show_assigned', 'false') == 'true')
 
         if show_available and self._has_active_child_filters(request):
             show_available = False
